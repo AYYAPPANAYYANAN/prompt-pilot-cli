@@ -6,10 +6,25 @@ from typing import List
 from rich import print
 from rich.console import Console
 from rich.table import Table
+from pathlib import Path
 from .brain import optimize_intent, save_to_history, HISTORY_FILE
 
 app = typer.Typer(help="PromptPilot: Orchestrate your AI workflow.")
 console = Console()
+
+# Define the path for the configuration file
+CONFIG_FILE = Path.home() / ".prompt_pilot.env"
+
+@app.command()
+def config(key: str = typer.Option(..., help="Your Groq API Key")):
+    """⚙️ Save your Groq API key to a local config file."""
+    try:
+        with open(CONFIG_FILE, "w") as f:
+            f.write(f"GROQ_API_KEY={key}\n")
+        console.print(f"[bold green]✅ API Key saved successfully to {CONFIG_FILE}![/bold green]")
+        console.print("[dim]Note: Ensure you have python-dotenv installed to load this key.[/dim]")
+    except Exception as e:
+        console.print(f"[bold red]Error saving config:[/bold red] {e}")
 
 @app.command()
 def optimize(
@@ -57,9 +72,12 @@ def history():
 
     # Show the last 10 entries
     for entry in data[-10:]:
-        table.add_row(entry["timestamp"], entry["intent"], entry["prompt"])
+        # Truncate prompt for better table display
+        snippet = (entry["prompt"][:50] + '..') if len(entry["prompt"]) > 50 else entry["prompt"]
+        table.add_row(entry["timestamp"], entry["intent"], snippet)
 
     console.print(table)
+
 @app.command()
 def clear():
     """🗑️ Clear all prompt history."""
@@ -68,5 +86,6 @@ def clear():
         console.print("[bold red]History deleted successfully.[/bold red]")
     else:
         console.print("[yellow]No history file found to delete.[/yellow]")
+
 if __name__ == "__main__":
     app()
