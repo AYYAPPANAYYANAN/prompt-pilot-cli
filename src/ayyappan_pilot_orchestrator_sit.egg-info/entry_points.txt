@@ -1,0 +1,2 @@
+[console_scripts]
+pilot = prompt_pilot.main:app

@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: ayyappan-pilot-orchestrator-sit
+Version: 0.1.0
+Summary: A high-performance AI prompt orchestration CLI powered by Groq.
+Author: Ayyappan Ayyanan
+Keywords: ai,prompt-engineering,groq,cli,automation
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: typer[all]
+Requires-Dist: rich
+Requires-Dist: groq
+Requires-Dist: python-dotenv
+Requires-Dist: pyperclip
