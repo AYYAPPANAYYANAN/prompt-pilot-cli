@@ -1,0 +1,24 @@
+[project]
+name = "ayyappan-pilot-orchestrator-sit"
+version = "0.1.0"
+description = "A high-performance AI prompt orchestration CLI powered by Groq."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Ayyappan Ayyanan" }
+]
+keywords = ["ai", "prompt-engineering", "groq", "cli", "automation"]
+dependencies = [
+    "typer[all]",
+    "rich",
+    "groq",
+    "python-dotenv",
+    "pyperclip",
+]
+
+[project.scripts]
+pilot = "prompt_pilot.main:app"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
